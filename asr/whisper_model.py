@@ -1,6 +1,6 @@
 import whisper
 
-model = whisper.load_model("small")
+model = whisper.load_model("tiny")
 
 def transcribe_audio(file_path):
     result = model.transcribe(file_path)

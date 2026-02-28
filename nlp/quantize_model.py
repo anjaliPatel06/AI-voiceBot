@@ -1,23 +1,32 @@
 import torch
 import json
-import os
 from transformers import DistilBertTokenizer, DistilBertForSequenceClassification
+from huggingface_hub import hf_hub_download
 
 model_name = "PatelAnjali/voicebot-intent-distilbert-int8"
 
-# Load tokenizer & model from HuggingFace
 tokenizer = DistilBertTokenizer.from_pretrained(model_name)
+
 model = DistilBertForSequenceClassification.from_pretrained(model_name)
 model.eval()
 
+model = torch.quantization.quantize_dynamic(
+    model,
+    {torch.nn.Linear},
+    dtype=torch.qint8
+)
 
-label_map_path = os.path.join(os.path.dirname(__file__), "label_map.json")
+# 🔹 Load label map
+label_map_path = hf_hub_download(
+    repo_id=model_name,
+    filename="label_map.json"
+)
 
 with open(label_map_path, "r") as f:
     label_map = json.load(f)
 
 
-def predict_intent(text):
+def predict_intent(text: str):
     inputs = tokenizer(
         text,
         return_tensors="pt",
@@ -34,4 +43,7 @@ def predict_intent(text):
 
     intent = label_map[str(pred)]
 
-    return intent, confidence
+    return {
+        "intent": intent,
+        "confidence": round(confidence, 4)
+    }
