@@ -13,4 +13,6 @@ evaluation/
 input.wav
 .cache/
 .env
-nlp/voicebot_intent_model_int8
+nlp/voicebot_intent_model_int8/
+*.bin
+*.safetensors
