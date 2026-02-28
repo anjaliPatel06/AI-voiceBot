@@ -1,0 +1,12 @@
+{
+  "order_status": "Your order is currently being processed.",
+  "cancel_order": "Your order has been cancelled successfully.",
+  "refund": "Your refund request has been initiated.",
+  "subscription_issue": "Your subscription issue has been noted.",
+  "greeting": "Hello! How can I assist you today?",
+  "goodbye": "Thank you for contacting us. Goodbye!",
+  "payment_issue": "We are checking your payment issue.",
+  "technical_support": "Our technical team is looking into your issue.",
+  "complaint": "We are sorry for the inconvenience caused.",
+  "product_query": "Here are the details of the product you asked about."
+}

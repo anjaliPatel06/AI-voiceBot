@@ -1,0 +1,16 @@
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.wav
+*.mp3
+*.zip
+*.csv
+*.ipynb
+model/
+test_audio/
+evaluation/
+input.wav
+.cache/
+.env
+nlp/voicebot_intent_model_int8
