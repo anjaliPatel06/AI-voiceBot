@@ -6,8 +6,11 @@ from nlp.intent_model import predict_intent
 from nlp.response_generator import generate_response
 from tts.tts_engine import text_to_speech
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+import uuid
 
 app = FastAPI()
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 app.add_middleware(
     CORSMiddleware,
@@ -19,7 +22,7 @@ app.add_middleware(
 
 @app.post("/transcribe")
 async def transcribe(file: UploadFile = File(...)):
-    input_path = "input.wav"
+    input_path = f"temp_{uuid.uuid4()}.wav"
 
     with open(input_path, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
@@ -55,7 +58,7 @@ async def synthesize_endpoint(text: str):
 
 @app.post("/voicebot")
 async def voicebot(file: UploadFile = File(...)):
-    input_path = "input.wav"
+    input_path = f"temp_{uuid.uuid4()}.wav"
 
     with open(input_path, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
@@ -70,12 +73,15 @@ async def voicebot(file: UploadFile = File(...)):
     response_text = generate_response(intent)
 
     # Step 4: TTS
-    audio_path = text_to_speech(response_text)
+
+    filename = f"static/{uuid.uuid4()}.mp3"
+
+    audio_path = text_to_speech(response_text, filename)
 
     return {
         "transcribed_text": text,
         "intent": intent,
         "confidence": confidence,
         "response_text": response_text,
-        "audio_file": audio_path
+        "audio_file_url": f"/{filename}"
     }

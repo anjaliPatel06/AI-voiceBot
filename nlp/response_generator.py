@@ -1,6 +1,9 @@
+import os
 import json
 
-with open("data/responses.json") as f:
+file_path = os.path.join(os.path.dirname(__file__), "..", "data", "responses.json")
+
+with open(file_path) as f:
     RESPONSES = json.load(f)
 
 def generate_response(intent):

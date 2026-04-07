@@ -43,11 +43,7 @@ if uploaded_file is not None:
 
                 st.subheader("Bot Audio Response")
 
-                audio_path = result["audio_file"]
-
-                with open(audio_path, "rb") as audio_file:
-                    audio_bytes = audio_file.read()
-                    st.audio(audio_bytes, format="audio/mp3")
+                st.audio(result["audio_file_url"])
 
             except Exception as e:
                 st.error(f"Error: {e}")

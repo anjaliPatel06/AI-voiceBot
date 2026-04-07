@@ -26,24 +26,3 @@ with open(label_map_path, "r") as f:
     label_map = json.load(f)
 
 
-def predict_intent(text: str):
-    inputs = tokenizer(
-        text,
-        return_tensors="pt",
-        truncation=True,
-        padding=True
-    )
-
-    with torch.no_grad():
-        outputs = model(**inputs)
-
-    probs = torch.softmax(outputs.logits, dim=1)
-    pred = torch.argmax(probs, dim=1).item()
-    confidence = torch.max(probs).item()
-
-    intent = label_map[str(pred)]
-
-    return {
-        "intent": intent,
-        "confidence": round(confidence, 4)
-    }
