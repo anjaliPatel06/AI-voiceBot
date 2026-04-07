@@ -23,7 +23,7 @@ if uploaded_file is not None:
 
             try:
                 response = requests.post(
-                    "http://127.0.0.1:8000/voicebot",
+                    "/voicebot",
                     files=files
                 )
 
