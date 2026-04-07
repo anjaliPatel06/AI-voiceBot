@@ -5,8 +5,17 @@ from asr.whisper_model import transcribe_audio
 from nlp.intent_model import predict_intent
 from nlp.response_generator import generate_response
 from tts.tts_engine import text_to_speech
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.post("/transcribe")
 async def transcribe(file: UploadFile = File(...)):
