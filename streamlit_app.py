@@ -23,7 +23,7 @@ if uploaded_file is not None:
 
             try:
                 response = requests.post(
-                    "/voicebot",
+                    "https://ai-voicebot-ov9p.onrender.com/voicebot",
                     files=files
                 )
 
